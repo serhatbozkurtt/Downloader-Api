@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, request
 import get
 import get_mobil
 
@@ -13,6 +13,15 @@ def baslangic_ap():
 def begin_mobil(link):
     get_mobil.main(link)
     return "mobil link: " + link
+
+@app.route("/down", methods=['GET', 'POST'])
+def down():
+    if request.method == 'POST':
+        req_data = request.get_json()
+        print(req_data)
+        res = get_mobil.link_js(req_data)
+        return jsonify({'video_name':res})
+    return jsonify({'todos':'TODOS'})
 
 
 if __name__ == "__main__":
